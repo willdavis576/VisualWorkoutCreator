@@ -48,25 +48,37 @@ maybe QT?
 '''
 
 def main(session):
-    print("HIIT Round 1. {sets} sets of {setDur} seconds with a {setRest} second rest between sets. At the end, rest for {finalRest}".format(sets = session.HIITround1[0], setDur = session.HIITround1[1], setRest = session.HIITround1[2], finalRest = session.HIITround1[3]))
-    input("Press Enter when you're ready to start.")
-    countDown = 3
-    progressBar = 0
+    step = 0
     
-    sleep(0.1) 
-    for i in range(3):
-        print(countDown)
-        countDown -= 1
-        sleep(1)
-    print("GO")
-    print("Jogging for {setDur} seconds".format(setDur = session.HIITround1[1]))
-    
-    # Display the visual prgression bar now and maybe the picture of the exercise??????
-    for i in range(session.HIITround1[1]):
-        progressBar = 100/session.HIITround1[1] * i
-        print(progressBar)
-        sleep(1)
+    if step == 0:
+        print("HIIT Round 1. {sets} sets of {setDur} seconds with a {setRest} second rest between sets. At the end, rest for {finalRest}".format(sets = session.HIITround1[0], setDur = session.HIITround1[1], setRest = session.HIITround1[2], finalRest = session.HIITround1[3]))
+        input("Press Enter when you're ready to start.")
+        countDown = 3
+        activeProgressBar = 0
+        restProgressBar = 0
         
+        sleep(0.1) 
+        for i in range(3):
+            print(countDown)
+            countDown -= 1
+            sleep(1)
+        print("GO")
+        print("Jogging for {setDur} seconds".format(setDur = session.HIITround1[1]))
+        
+        # Display the visual prgression bar now and maybe the picture of the exercise??????
+        for i in range(session.HITTround1[0]):
+            for j in range(session.HIITround1[1]):
+                activeProgressBar = 100/session.HIITround1[1] * j
+                sleep(1)
+                
+            activeProgressBar = 0
+            
+            for k in range(session.HITTround1[2]):
+                restProgressBar = 100/session.HITTround1[2] * k
+                sleep(1)
+            
+        
+
     
     
     
