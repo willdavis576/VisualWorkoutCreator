@@ -107,7 +107,7 @@ def main(bookDf, sessionNum):
     print("HIIT round 1. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes.".format(sets = a[1], dur = a[2], durR = a[3], restFin = a[4]))
     input("Press Enter to start")
     if progressBarHIIT(a) == True: print("FINISH")
-    
+
     print("Time for GVT. First up is {exercise}. Perform {sets} sets of {reps} reps.".format(exercise = GVT[0][int(choices[0])-1], sets = b[2], reps = b[3]))
 
     input("Press Enter when you've finished.")
@@ -136,5 +136,5 @@ def csvResetFunc(bookDf):
   
     bookDf.to_csv("book.csv", index=False)
 
-# main(bookDf, 1)
-csvResetFunc(bookDf)
+main(bookDf, 1)
+# csvResetFunc(bookDf)

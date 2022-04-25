@@ -1,4 +1,5 @@
 sessionNumber,desc,a,b,c,d,uAChoice,uBChoice,uCChoice,uDChoice
-1,arms,"HIIT,6,30,45,2","barbellCurl,hammerCurl,10,10","HIIT,6,30,45,2","barbellSkull,tricepKick,10,10",n,n,n,n
-2,chest and back,"HIIT,6,30,45,2","barbellBench,dumbbellChest,10,10","HIIT,6,30,45,2","singleArmDumbbellRows,bentoverBarbellRows,10,10",n,n,n,n
-3,legs,"HIIT,6,30,45,2","barbellSquats,dumbbellSquats,10,10","HIIT,6,30,45,2","dumbbellLunges,romanianDeadlifts,10,10",n,n,n,n
+1,Arms (Biceps and Triceps),"HIIT,6,30,45,2","Barbell Curls,Hammer Curls with Dumbbells,10,10","HIIT,6,30,45,2","Barbell Skull Crushers,Tricep Kick-Backs,10,10",n,n,n,n
+2,Chest and Back,"HIIT,6,30,45,2","Barbell Bench Press,Dumbbell Chest Press,10,10","HIIT,6,30,45,2","Single Arm Dumbbell Rows,Bent-over Barbell Rows,10,10",n,n,n,n
+3,Legs (and Glutes),"HIIT,6,30,45,2","Barbell Squats,Dumbbell Squats,10,10","HIIT,6,30,45,2","Dumbbell Lunges,Romanian Deadlifts,10,10",n,n,n,n
+4,Shoulders,"HIIT,6,30,45,2","Seated Dumbbell Shoulder Press,Seated Barbell Shoulder Press,10,10","HIIT,6,30,45,2","Dumbbal Lateral Raises,Dumbbell Frontal Raises,10,10",n,n,n,n
