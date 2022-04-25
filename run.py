@@ -51,6 +51,7 @@ import pandas as pd
 
 bookDf = pd.read_csv("book.csv")
 
+
 def sessionSetup(bookDf, sessionNum, weekContents):
     HIIT = []
     GVT = []
@@ -68,6 +69,13 @@ def sessionSetup(bookDf, sessionNum, weekContents):
     else: GVT.append(d)
     print("Welcome to Session {seshNum}. This week we will be covering {desc}. For GVT, you have the option for {GVT1a} and {GVT1b} for the first section and {GVT2a} and {GVT2b} for second section.".format(seshNum = sessionNum, desc = weekContents[1], GVT1a = GVT[0][0], GVT1b = GVT[0][1], GVT2a = GVT[1][0], GVT2b = GVT[1][1]))
     choices = input("Please enter in the form firstChoice,secondChoice: ")
+    
+    # update the dataFrame to reflect the user's choices.
+    bookDf.at[sessionNum - 1,"uBChoice"] = GVT[0][int(choices[0])-1]
+    bookDf.at[sessionNum - 1, "uDChoice"] = GVT[1][int(choices[2])-1]
+    bookDf.to_csv("book.csv", index=False)
+
+   
     print("You have chosen {one} and {two}.".format(one = GVT[0][int(choices[0])-1], two = GVT[1][int(choices[2])-1]))
     return a,b,c,d,HIIT,GVT,choices
 
@@ -90,10 +98,10 @@ def progressBarHIIT(stage):
             print(restProgressBar)
             sleep(1)
     return True
-            
+    
 
 def main(bookDf, sessionNum):
-    weekContents = bookDf.loc[sessionNum-1,:]
+    weekContents = bookDf.loc[sessionNum-1,:] # locating a specific row.
     a,b,c,d,HIIT,GVT,choices = sessionSetup(bookDf, sessionNum, weekContents)
     
     print("HIIT round 1. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes.".format(sets = a[1], dur = a[2], durR = a[3], restFin = a[4]))
@@ -112,5 +120,21 @@ def main(bookDf, sessionNum):
 
     input("Press Enter when you've finished.")
     
+    
+def csvResetFunc(bookDf):    
+    for i in range(len(bookDf["uAChoice"])):
+        bookDf.at[i, "uAChoice"] = "n"
+        
+    for i in range(len(bookDf["uBChoice"])):
+        bookDf.at[i, "uBChoice"] = "n"
+        
+    for i in range(len(bookDf["uCChoice"])):
+        bookDf.at[i, "uCChoice"] = "n"
+        
+    for i in range(len(bookDf["uDChoice"])):
+        bookDf.at[i, "uDChoice"] = "n"
+  
+    bookDf.to_csv("book.csv", index=False)
 
-main(bookDf, 1)
+# main(bookDf, 1)
+csvResetFunc(bookDf)
