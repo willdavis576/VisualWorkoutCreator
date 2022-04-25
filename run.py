@@ -66,89 +66,51 @@ def sessionSetup(bookDf, sessionNum, weekContents):
     d = weekContents[5].split(",")
     if "HIIT" in d: HIIT.append(d)
     else: GVT.append(d)
-    print("Welcome to Session {seshNum}. This week we will be covering {desc}. For GVT, you have the option for {GVT} for the first section and {GVT2} for second section.".format(seshNum = sessionNum, desc = weekContents[1], GVT= GVT[0], GVT2 = GVT[1]))
+    print("Welcome to Session {seshNum}. This week we will be covering {desc}. For GVT, you have the option for {GVT1a} and {GVT1b} for the first section and {GVT2a} and {GVT2b} for second section.".format(seshNum = sessionNum, desc = weekContents[1], GVT1a = GVT[0][0], GVT1b = GVT[0][1], GVT2a = GVT[1][0], GVT2b = GVT[1][1]))
     choices = input("Please enter in the form firstChoice,secondChoice: ")
     print("You have chosen {one} and {two}.".format(one = GVT[0][int(choices[0])-1], two = GVT[1][int(choices[2])-1]))
-    return a,b,c,d,HIIT,GVT
+    return a,b,c,d,HIIT,GVT,choices
 
-def main2(bookDf, sessionNum):
-    weekContents = bookDf.loc[sessionNum-1,:]
-    a,b,c,d,HIIT,GVT = sessionSetup(bookDf, sessionNum, weekContents)
-    
-    countDown = 3
+def progressBarHIIT(stage):
     activeProgressBar = 0
     restProgressBar = 0
     
-    sleep(0.1) 
-    
-    for i in range(3):
-        print(countDown)
-        countDown -= 1
-        sleep(1)
-    
-    stage = a
-    print("HIIT round 1. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes.".format(sets = stage[1], dur = stage[2], durR = stage[3], restFin = stage[4]))
-    
-    # Display the visual prgression bar now and maybe the picture of the exercise??????
     for i in range(int(stage[1])):
         print("GO")
         restProgressBar = 0
-        for j in range(int(stage[2])):
-            activeProgressBar = round(100/int(stage[2]) * j)
+        for j in range(int(0.1)): #stage[2]
+            activeProgressBar = round(100/int(0.1) * j) # stage[2]
             print(activeProgressBar)
             sleep(1)
             
         activeProgressBar = 0
         print("REST. {sets} active sets remaining.".format(sets = int(stage[1]) - i - 1))
-        for k in range(int(stage[3])):
-            restProgressBar = round(100/int(stage[3]) * k)
+        for k in range(int(0.1)): #stage[3]
+            restProgressBar = round(100/int(0.1) * k) # stage[3]
             print(restProgressBar)
             sleep(1)
+    return True
             
+
+def main(bookDf, sessionNum):
+    weekContents = bookDf.loc[sessionNum-1,:]
+    a,b,c,d,HIIT,GVT,choices = sessionSetup(bookDf, sessionNum, weekContents)
     
+    print("HIIT round 1. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes.".format(sets = a[1], dur = a[2], durR = a[3], restFin = a[4]))
+    input("Press Enter to start")
+    if progressBarHIIT(a) == True: print("FINISH")
+    
+    print("Time for GVT. First up is {exercise}. Perform {sets} sets of {reps} reps.".format(exercise = GVT[0][int(choices[0])-1], sets = b[2], reps = b[3]))
+
+    input("Press Enter when you've finished.")
+    
+    print("HIIT round 2. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes.".format(sets = c[1], dur = c[2], durR = c[3], restFin = c[4]))
+    input("Press Enter to start")
+    if progressBarHIIT(c) == True: print("FINISH")
+    
+    print("Time for GVT. First up is {exercise}. Perform {sets} sets of {reps} reps.".format(exercise = GVT[1][int(choices[2])-1], sets = d[2], reps = d[3]))
+
+    input("Press Enter when you've finished.")
     
 
-main2(bookDf, 1)
-
-
-
-def main(session):
-    step = 0
-    
-    if step == 0:
-        print("HIIT Round 1. {sets} sets of {setDur} seconds with a {setRest} second rest between sets. At the end, rest for {finalRest}".format(sets = session.HIITround1[0], setDur = session.HIITround1[1], setRest = session.HIITround1[2], finalRest = session.HIITround1[3]))
-        input("Press Enter when you're ready to start.")
-        countDown = 3
-        activeProgressBar = 0
-        restProgressBar = 0
-        
-        sleep(0.1) 
-        for i in range(3):
-            print(countDown)
-            countDown -= 1
-            sleep(1)
-        print("GO")
-        print("Jogging for {setDur} seconds".format(setDur = session.HIITround1[1]))
-        
-        # Display the visual prgression bar now and maybe the picture of the exercise??????
-        for i in range(session.HIITround1[0]):
-            for j in range(session.HIITround1[1]):
-                activeProgressBar = round(100/session.HIITround1[1] * j)
-                print(activeProgressBar)
-                sleep(1)
-                
-            activeProgressBar = 0
-            
-            for k in range(session.HIITround1[2]):
-                restProgressBar = round(100/session.HIITround1[2] * k)
-                print(restProgressBar)
-                sleep(1)
-            
-        
-
-    
-    
-    
-    
-    
-# main(session)
+main(bookDf, 1)
