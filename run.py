@@ -51,8 +51,7 @@ import pandas as pd
 
 bookDf = pd.read_csv("book.csv")
 
-def main2(bookDf, sessionNum):
-    weekContents = bookDf.loc[sessionNum-1,:]
+def sessionSetup(bookDf, sessionNum, weekContents):
     HIIT = []
     GVT = []
     a = weekContents[2].split(",")
@@ -70,6 +69,44 @@ def main2(bookDf, sessionNum):
     print("Welcome to Session {seshNum}. This week we will be covering {desc}. For GVT, you have the option for {GVT} for the first section and {GVT2} for second section.".format(seshNum = sessionNum, desc = weekContents[1], GVT= GVT[0], GVT2 = GVT[1]))
     choices = input("Please enter in the form firstChoice,secondChoice: ")
     print("You have chosen {one} and {two}.".format(one = GVT[0][int(choices[0])-1], two = GVT[1][int(choices[2])-1]))
+    return a,b,c,d,HIIT,GVT
+
+def main2(bookDf, sessionNum):
+    weekContents = bookDf.loc[sessionNum-1,:]
+    a,b,c,d,HIIT,GVT = sessionSetup(bookDf, sessionNum, weekContents)
+    
+    countDown = 3
+    activeProgressBar = 0
+    restProgressBar = 0
+    
+    sleep(0.1) 
+    
+    for i in range(3):
+        print(countDown)
+        countDown -= 1
+        sleep(1)
+    
+    stage = a
+    print("HIIT round 1. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes.".format(sets = stage[1], dur = stage[2], durR = stage[3], restFin = stage[4]))
+    
+    # Display the visual prgression bar now and maybe the picture of the exercise??????
+    for i in range(int(stage[1])):
+        print("GO")
+        restProgressBar = 0
+        for j in range(int(stage[2])):
+            activeProgressBar = round(100/int(stage[2]) * j)
+            print(activeProgressBar)
+            sleep(1)
+            
+        activeProgressBar = 0
+        print("REST. {sets} active sets remaining.".format(sets = int(stage[1]) - i - 1))
+        for k in range(int(stage[3])):
+            restProgressBar = round(100/int(stage[3]) * k)
+            print(restProgressBar)
+            sleep(1)
+            
+    
+    
 
 main2(bookDf, 1)
 
