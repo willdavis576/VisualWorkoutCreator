@@ -1,0 +1,4 @@
+sessionNo1	a	b	c	d	uAChoice	uBChoice	uCChoice	uDChoice
+1	"HIIT,6,30a,45r,2rf"	"barbellCurl,hammerCurl"	"HIIT,6,30a,45r,2rf"	"barbellSkull,tricepKick"	0	0	0	0
+2	"HIIT,6,30a,45r,2rf"	"barbellBench,dumbbellChest"	"HIIT,6,30a,45r,2rf"	"singleArmDumbbellRows,bentoverBarbellRows"	0	0	0	0
+3	"HIIT,6,30a,45r,2rf"	"barbellSquats,dumbbellSquats"	"HIIT,6,30a,45r,2rf"	"dumbbellLunges,romanianDeadlifts"	0	0	0	0

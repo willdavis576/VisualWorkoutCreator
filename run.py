@@ -66,15 +66,17 @@ def main(session):
         print("Jogging for {setDur} seconds".format(setDur = session.HIITround1[1]))
         
         # Display the visual prgression bar now and maybe the picture of the exercise??????
-        for i in range(session.HITTround1[0]):
+        for i in range(session.HIITround1[0]):
             for j in range(session.HIITround1[1]):
-                activeProgressBar = 100/session.HIITround1[1] * j
+                activeProgressBar = round(100/session.HIITround1[1] * j)
+                print(activeProgressBar)
                 sleep(1)
                 
             activeProgressBar = 0
             
-            for k in range(session.HITTround1[2]):
-                restProgressBar = 100/session.HITTround1[2] * k
+            for k in range(session.HIITround1[2]):
+                restProgressBar = round(100/session.HIITround1[2] * k)
+                print(restProgressBar)
                 sleep(1)
             
         
