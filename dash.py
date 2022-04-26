@@ -12,8 +12,9 @@ class Runnable(QRunnable):
     
     def run(self):
         global bookDf
-        self.main(bookDf, 1)
-
+        # self.main(bookDf, 1)
+        while True:
+            print(ui.submit.clicked)
         # while True:
         #     self.textInputText = ui.textInput.toPlainText()
         #     if "\n" in self.textInputText:
@@ -22,6 +23,15 @@ class Runnable(QRunnable):
         #         self.textInputText = ""
                 
         #     
+        
+    def readTextInput(self):
+        self.textInputText = ui.textInput.toPlainText()
+        if "\n" in self.textInputText:
+            self.readText = self.textInputText
+            ui.textInput.setPlainText("")
+            self.textInputText = ""
+            return self.readText
+            
                 
                 
     def sessionSetup(self, bookDf, sessionNum, weekContents):
@@ -58,16 +68,16 @@ class Runnable(QRunnable):
         for i in range(int(stage[1])):
             print("GO")
             self.restProgressBar = 0
-            for j in range(int(0.1)): #stage[2]
-                self.activeProgressBar = round(100/int(0.1) * j) # stage[2]
+            for j in range(int(2)): #stage[2]
+                self.activeProgressBar = round(100/int(2) * j) # stage[2]
                 ui.progressBar.setValue(self.activeProgressBar)
                 print(self.activeProgressBar)
                 sleep(1)
                 
             self.activeProgressBar = 0
             print("REST. {sets} active sets remaining.".format(sets = int(stage[1]) - i - 1))
-            for k in range(int(0.1)): #stage[3]
-                self.restProgressBar = round(100/int(0.1) * k) # stage[3]
+            for k in range(int(2)): #stage[3]
+                self.restProgressBar = round(100/int(2) * k) # stage[3]
                 ui.progressBar.setValue(self.restProgressBar)
                 print(self.restProgressBar)
                 sleep(1)
@@ -78,21 +88,19 @@ class Runnable(QRunnable):
         weekContents = bookDf.loc[sessionNum-1,:] # locating a specific row.
         a,b,c,d,HIIT,GVT,choices = self.sessionSetup(bookDf, sessionNum, weekContents)
         
-        ui.output.setText("HIIT round 1. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes. Press Enter to start".format(sets = a[1], dur = a[2], durR = a[3], restFin = a[4]))
+        ui.output.setText("HIIT round 1. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes. Press Submit to start".format(sets = a[1], dur = a[2], durR = a[3], restFin = a[4]))
 
-        if self.progressBarHIIT(a) == True: print("FINISH")
+        if self.progressBarHIIT(a) == True: ui.output.setText("FINISH")
 
-        print("Time for GVT. First up is {exercise}. Perform {sets} sets of {reps} reps.".format(exercise = GVT[0][int(choices[0])-1], sets = b[2], reps = b[3]))
-
-        input("Press Enter when you've finished.")
+        ui.output.setText("Time for GVT. First up is {exercise}. Perform {sets} sets of {reps} reps.Press Enter when you've finished.".format(exercise = GVT[0][int(choices[0])-1], sets = b[2], reps = b[3]))
         
-        print("HIIT round 2. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes.".format(sets = c[1], dur = c[2], durR = c[3], restFin = c[4]))
-        input("Press Enter to start")
-        if self.progressBarHIIT(c) == True: print("FINISH")
+        ui.output.setText("HIIT round 2. {sets} sets of {dur} seconds with a {durR} second rest between sets. Rest {restFin} minutes. Press Enter to start".format(sets = c[1], dur = c[2], durR = c[3], restFin = c[4]))
         
-        print("Time for GVT. First up is {exercise}. Perform {sets} sets of {reps} reps.".format(exercise = GVT[1][int(choices[2])-1], sets = d[2], reps = d[3]))
+        if self.progressBarHIIT(c) == True: ui.output.setText("FINISH")
+        
+        ui.output.setText("Time for GVT. First up is {exercise}. Perform {sets} sets of {reps} reps. Press Enter when you've finished.".format(exercise = GVT[1][int(choices[2])-1], sets = d[2], reps = d[3]))
 
-        input("Press Enter when you've finished.")
+
         
         
     def csvResetFunc(bookDf):    
@@ -110,6 +118,10 @@ class Runnable(QRunnable):
     
         bookDf.to_csv("book.csv", index=False)
         
+
+
+
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -355,19 +367,22 @@ class Ui_MainWindow(object):
         self.label_10.raise_()
         self.output = QtWidgets.QLabel(self.centralwidget)
         self.output.setGeometry(QtCore.QRect(200, 350, 400, 51))
-        self.output.setWordWrap(True)
         font = QtGui.QFont()
         font.setFamily("MS Gothic")
         font.setPointSize(12)
         self.output.setFont(font)
         self.output.setAlignment(QtCore.Qt.AlignCenter)
         self.output.setObjectName("output")
+        self.output.setWordWrap(True)
         self.textInput = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.textInput.setGeometry(QtCore.QRect(300, 410, 200, 31))
+        self.textInput.setGeometry(QtCore.QRect(300, 410, 200, 30))
         self.textInput.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.textInput.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.textInput.setPlainText("")
         self.textInput.setObjectName("textInput")
+        self.submit = QtWidgets.QPushButton(self.centralwidget)
+        self.submit.setGeometry(QtCore.QRect(170, 410, 100, 30))
+        self.submit.setObjectName("submit")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -390,7 +405,9 @@ class Ui_MainWindow(object):
         self.label_9.setText(_translate("MainWindow", "n"))
         self.label_10.setText(_translate("MainWindow", "n"))
         self.output.setText(_translate("MainWindow", "Status"))
-
+        self.submit.setText(_translate("MainWindow", "Submit"))
+        
+        
     def runTasks(self):
             threadCount = QThreadPool.globalInstance().maxThreadCount()
             pool = QThreadPool.globalInstance()
@@ -407,3 +424,4 @@ if __name__ == "__main__":
     ui.runTasks()
     MainWindow.show()
     sys.exit(app.exec_())
+
